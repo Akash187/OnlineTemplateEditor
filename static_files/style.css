@@ -1,0 +1,84 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+#header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-image: url('https://ci5.googleusercontent.com/proxy/gCHLqxYTfo4VP0G7iMXn650oZ5xWzkd5V8auvrMvGYX-ZhwSaXWRo1JX7UwmaQD5qTi4LvqF72LIT0e7zoK__KBZuHhf9hs_H86PLD6ABiXcCh0mjKNnkNIsp80y9V8utM692K5TtX6qoffRR-MUsfDKscFvO4dpDal2ORTQTec=s0-d-e1-ft#https://rukminim1.flixcart.com/www/834/60/promos/28/08/2017/de0c263a-65a0-4f4b-b141-5062917b7d9b.png?q=100');
+    height: 60px;
+    padding: 0 20px 0 20px;
+}
+#header img{
+    border: none;
+    border: 0;
+}
+#header h2{
+    color: white;
+}
+#orderInfo{
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+#product{
+    display: flex;
+}
+#product img{
+    height: 200px;
+    padding: 10px;
+}
+#product div{
+    padding: 10px;
+}
+#product div div{
+    padding: 0;
+}
+#product div:nth-child(1){
+    color: blue;
+    padding-bottom: 10px;
+    font-size: 24px;
+}
+#feedback{
+    line-height: 2;
+    padding: 15px;
+}
+#rating{
+    display: flex;
+    align-items: center;
+}
+.score{
+    width: 60px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+}
+.one{
+    background: red;
+}
+.two{
+    background: orange;
+}
+.three{
+    background: yellow;
+}
+.four{
+    background: lightgreen;
+}
+.five{
+    background: green;
+}
+#message{
+    line-height: 2;
+    padding: 15px;
+}
+#footer{
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#footer img{
+    height: 60px;
+}
