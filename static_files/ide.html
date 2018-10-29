@@ -50,43 +50,8 @@
 <script>
 
   let finalHtml = ''; //it get updated inside update function
-
-  let content = '<div id="header">\n' +
-    '  <img src="{{brandLogo}}">\n' +
-    '  <h2>Item Delivered</h2>\n' +
-    '</div>\n' +
-    '<div id="orderInfo">\n' +
-    '  <div>\n' +
-    '    <div>Hi {{customerName}}</div>\n' +
-    '    <div>An item has been delivered.</div>\n' +
-    '  </div>\n' +
-    '  <div>\n' +
-    '    <div>Order placed on: <b>{{orderDate}}</b></div>\n' +
-    '    <div>Order ID <b>{{orderId}}</b></div>\n' +
-    '  </div>\n' +
-    '</div>\n' +
-    '<hr/>\n' +
-    '<div id="product">\n' +
-    '  <img src="{{productImage}}">\n' +
-    '  <div>\n' +
-    '    <div id="productName">{{productName}}</div>\n' +
-    '    <div id="productSeller">Seller: {{productSeller}}</div>\n' +
-    '    <div id="productQuantity">Qty: {{productQuantity}}</div>\n' +
-    '  </div>\n' +
-    '</div>\n' +
-    '<hr>\n' +
-    '\n' +
-    '<div id="feedback">\n' +
-    '  {{{feedback}}}\n'+
-    '</div>\n' +
-    '<hr/>\n' +
-    '<div id="message">\n' +
-    ' {{{message}}}' +
-    '</div>\n' +
-    '<hr/>\n' +
-    '<div id="footer">\n' +
-    '  <img src="{{sellerLogo}}">\n' +
-    '</div>';
+  let htmlString = '';
+  let updatedTemplate = '';
 
   let feedbackHtml= '<div>We would love to get your feedback</div>\n' +
     '    <div><b>How likely are you to recommend Flipkart to your friends and colleagues?</b></div>\n' +
@@ -104,6 +69,18 @@
   let messageHtml = '<div><b>Thank you for shopping with Flipkart!</b></div>\n' +
     '    <div>Got Questions? Please get in touch with our 24x7 Customer Care</div>';
 
+  function ready() {
+    fetch('/template').then(function(response) {
+      return response.json();
+    }).then((myJson) => {
+      let content = myJson.template;
+      htmlString = html_beautify(content);
+      setupEditor();
+      update();
+      //console.log(content);
+    });
+  }
+
   async function fetchStyle () {
     try{
       let response = await fetch('./style.css');
@@ -113,8 +90,24 @@
     }
   }
 
+  function save(){
+    //console.log(updatedTemplate);
+    fetch('/template', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({template: updatedTemplate})
+    }).then(function(success) {
+      console.log("Template Updated!");
+    }).catch(function(err) {
+      console.log(err);
+    });
+  }
+
   function sendMail(){
-    console.log(finalHtml);
+    //console.log(finalHtml);
     fetch('/sendMail', {
       method: 'POST',
       headers: {
@@ -123,22 +116,19 @@
       },
       body: JSON.stringify({templateHtml: finalHtml})
     }).then(function(success) {
-      console.log(success);
+      console.log("Mail Send SuccessFully!");
     }).catch(function(err) {
       console.log(err);
     });
   }
 
-  let htmlString = content;
-  htmlString = html_beautify(htmlString);
-  function ready() {
-    setupEditor();
-    update();
-  }
   async function update()
   {
+    updatedTemplate = editor.session.getValue();
+    save();
+    //console.log(updatedTemplate);
     let style = await fetchStyle();
-    console.log(style);
+    //console.log(style);
     let htmlBeforeBody = '<!DOCTYPE html>\n' +
       '<html lang="en">\n' +
       '<head>\n' +
